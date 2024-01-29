@@ -21,5 +21,12 @@ function Setup-Mypy {
 	Write-Output $TEXT | Out-File -Append -Encoding ASCII mypy.ini
 }
 
+function Setup-Pylintrc {
+	Write-Output '[MASTER]' | Out-File -Encoding ASCII .pylintrc
+	$TEXT = 'init-hook = "import sys; sys.path.append(''src'')"'
+	Write-Output $TEXT | Out-File -Append -Encoding ASCII .pylintrc
+}
+
 Setup-Gitignore
 Setup-Mypy
+Setup-Pylintrc
