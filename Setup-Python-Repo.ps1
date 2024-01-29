@@ -32,7 +32,19 @@ function Setup-Pytest {
 	Write-Output 'pythonpath = src' | Out-File -Append -Encoding ASCII pytest.ini
 }
 
+function Setup-Githooks {
+	$SCRIPTS_PATH = 'C:/Scripts/git-hooks/*'
+	New-Item -Path 'git-hooks' -ItemType Directory -ErrorAction Ignore
+	Copy-Item $SCRIPTS_PATH './git-hooks' -Recurse -Force
+
+	$TEXT = 'Copy-Item "./git-hooks/links/*" -Destination ".git/hooks"'
+	Write-Output $TEXT | Out-File -Encoding ASCII Install-Hooks.ps1
+
+	Copy-Item "./git-hooks/links/*" -Destination ".git/hooks"
+}
+
 Setup-Gitignore
 Setup-Mypy
 Setup-Pylintrc
 Setup-Pytest
+Setup-Githooks
