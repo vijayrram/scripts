@@ -15,4 +15,11 @@ function Setup-Gitignore {
 	Write-Output '*cache*' | Out-File -Append -Encoding ASCII .gitignore
 }
 
+function Setup-Mypy {
+	Write-Output '[mypy]' | Out-File -Encoding ASCII mypy.ini
+	$TEXT = 'mypy_path = $MYPY_CONFIG_FILE_DIR/src'
+	Write-Output $TEXT | Out-File -Append -Encoding ASCII mypy.ini
+}
+
 Setup-Gitignore
+Setup-Mypy
