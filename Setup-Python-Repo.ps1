@@ -27,6 +27,12 @@ function Setup-Pylintrc {
 	Write-Output $TEXT | Out-File -Append -Encoding ASCII .pylintrc
 }
 
+function Setup-Pytest {
+	Write-Output '[pytest]' | Out-File -Encoding ASCII pytest.ini
+	Write-Output 'pythonpath = src' | Out-File -Append -Encoding ASCII pytest.ini
+}
+
 Setup-Gitignore
 Setup-Mypy
 Setup-Pylintrc
+Setup-Pytest
