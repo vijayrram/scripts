@@ -27,6 +27,7 @@ Currently the following Git Hooks are enabled.
 
 Runs the following quality control checks before committing:
 
-- Mypy
-- Pylint
-- Pytest & Coverage
+- **Mypy**: Static Type Checking and Linting
+- **Pylint**: Static Code Analysis and Linting
+- **Coverage**: Code Coverage using Tests
+    - **Pytest**: Unit Testing
