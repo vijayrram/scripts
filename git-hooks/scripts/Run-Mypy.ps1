@@ -1,18 +1,21 @@
-Write-Host "Running Mypy checks..."
-
-if (Test-Path "src") {
-    Write-Host "Checking Source Files..."
-    python -m mypy --strict src
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+function Run-Checks ($folder) {
+    if (Test-Path $folder) {
+        Write-Host "Checking $folder..."
+        python -m mypy --strict $folder
+        if (-Not $?) {exit $LASTEXITCODE}
+    }
 }
 
-if (Test-Path "tests") {
-    Write-Host "Checking Test Files..."
-    python -m mypy --strict tests
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+function Main {
+    Write-Host "Running Mypy checks..."
+
+    Run-Checks -folder 'src'
+    Run-Checks -folder 'tests'
+
+    Write-Host "Mypy checks complete. Exit code: $LASTEXITCODE"
+    Write-Host "--------------------------------------------------------------------------------"
+
+    exit $LASTEXITCODE
 }
 
-Write-Host "Mypy checks complete. Exit code: $LASTEXITCODE"
-Write-Host "--------------------------------------------------------------------------------"
-
-exit $LASTEXITCODE
+Main
