@@ -1,18 +1,21 @@
-Write-Host "Running Pylint checks..."
-
-if (Test-Path "src") {
-    Write-Host "Checking Source Files..."
-    python -m pylint src
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+function Run-Checks ($folder) {
+    if (Test-Path $folder) {
+        Write-Host "Checking $folder..."
+        python -m pylint $folder
+        if (-Not $?) {exit $LASTEXITCODE}
+    }
 }
 
-if (Test-Path "tests") {
-    Write-Host "Checking Test Files..."
-    python -m pylint tests
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+function Main {
+    Write-Host "Running Pylint checks..."
+
+    Run-Checks -folder 'src'
+    Run-Checks -folder 'tests'
+
+    Write-Host "Pylint checks complete. Exit code: $LASTEXITCODE"
+    Write-Host "--------------------------------------------------------------------------------"
+
+    exit $LASTEXITCODE
 }
 
-Write-Host "Pylint checks complete. Exit code: $LASTEXITCODE"
-Write-Host "--------------------------------------------------------------------------------"
-
-exit $LASTEXITCODE
+Main
