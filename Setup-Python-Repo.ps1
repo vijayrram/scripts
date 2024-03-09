@@ -15,7 +15,7 @@ function Main ($Ssh) {
 
 	Write-Output "# $Name" | Out-File -Encoding ASCII README.md
 	git add .
-	git commit -m "Initial Commit"
+	git commit -m "Initial Commit" -n
 	git branch -M main
 	git remote add origin $Ssh
 	git push -u origin main
