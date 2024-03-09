@@ -37,10 +37,7 @@ function Setup-Githooks {
 	New-Item -Path 'git-hooks' -ItemType Directory -ErrorAction Ignore
 	Copy-Item $SCRIPTS_PATH './git-hooks' -Recurse -Force
 
-	$TEXT = 'Copy-Item "./git-hooks/links/*" -Destination ".git/hooks"'
-	Write-Output $TEXT | Out-File -Encoding ASCII Install-Hooks.ps1
-
-	Copy-Item "./git-hooks/links/*" -Destination ".git/hooks"
+	./git-hooks/Install-Scripts.ps1
 }
 
 Setup-Gitignore
