@@ -13,7 +13,7 @@ function Main {
     Run-Checks -folder 'tests'
 
     Write-Host "Pylint checks complete. Exit code: $LASTEXITCODE"
-    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host ("-" * 80)
 
     exit $LASTEXITCODE
 }

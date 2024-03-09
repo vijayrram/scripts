@@ -17,7 +17,7 @@ function Main {
     Generate-Reports
 
     Write-Host "Pytest checks complete. Exit code: $LASTEXITCODE"
-    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host ("-" * 80)
 
     exit $LASTEXITCODE
 }
