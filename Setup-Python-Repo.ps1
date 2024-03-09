@@ -8,6 +8,7 @@ function Main ($Ssh) {
 	git init
 
 	Setup-Gitignore
+	Setup-Venv
 	Setup-Mypy
 	Setup-Pylint
 	Setup-Pytest
@@ -39,6 +40,20 @@ function Setup-Gitignore {
 
 	Write-Output '# Cache Folders' | Out-File -Append -Encoding ASCII .gitignore
 	Write-Output '*cache*' | Out-File -Append -Encoding ASCII .gitignore
+}
+
+function Setup-Venv {
+	Write-Output 'mypy' | Out-File -Encoding ASCII requirements.txt
+	Write-Output 'pylint' | Out-File -Append -Encoding ASCII requirements.txt
+	Write-Output 'pytest' | Out-File -Append -Encoding ASCII requirements.txt
+	Write-Output 'pytest-mock' | Out-File -Append -Encoding ASCII requirements.txt
+	Write-Output 'coverage' | Out-File -Append -Encoding ASCII requirements.txt
+
+	python -m venv .venv
+	./.venv/Scripts/Activate
+
+	python -m pip install --upgrade pip
+	python -m pip install -r requirements.txt
 }
 
 function Setup-Mypy {
