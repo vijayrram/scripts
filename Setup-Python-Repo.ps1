@@ -47,7 +47,7 @@ function Setup-Mypy {
 	Write-Output $TEXT | Out-File -Append -Encoding ASCII mypy.ini
 }
 
-function Setup-Pylintrc {
+function Setup-Pylint {
 	Write-Output '[MASTER]' | Out-File -Encoding ASCII .pylintrc
 	$TEXT = 'init-hook = "import sys; sys.path.append(''src'')"'
 	Write-Output $TEXT | Out-File -Append -Encoding ASCII .pylintrc
@@ -63,7 +63,7 @@ function Setup-Githooks {
 	New-Item -Path 'git-hooks' -ItemType Directory -ErrorAction Ignore
 	Copy-Item $SCRIPTS_PATH './git-hooks' -Recurse -Force
 
-	./git-hooks/Install-Scripts.ps1
+	./git-hooks/Install-Hooks.ps1
 }
 
 Main $args
