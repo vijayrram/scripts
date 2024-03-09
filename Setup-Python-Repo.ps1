@@ -1,3 +1,29 @@
+function Main ($Ssh) {
+	$Name = $Ssh.split("/")[-1].replace(".git", "")
+	if (Test-Path -Path $Name) {exit -1}
+
+	New-Item -Path $Name -ItemType Directory -ErrorAction Ignore
+	cd $Name
+
+	git init
+
+	Setup-Gitignore
+	Setup-Mypy
+	Setup-Pylint
+	Setup-Pytest
+	Setup-Githooks
+
+	Write-Output "# $Name" | Out-File -Encoding ASCII README.md
+	git add .
+	git commit -m "Initial Commit"
+	git branch -M main
+	git remote add origin $Ssh
+	git push -u origin main
+
+	git checkout -b develop
+	git push -u origin develop
+}
+
 function Setup-Gitignore {
 	Write-Output '# VS Code' | Out-File -Encoding ASCII .gitignore
 	Write-Output '.vscode' | Out-File -Append -Encoding ASCII .gitignore
@@ -40,8 +66,4 @@ function Setup-Githooks {
 	./git-hooks/Install-Scripts.ps1
 }
 
-Setup-Gitignore
-Setup-Mypy
-Setup-Pylintrc
-Setup-Pytest
-Setup-Githooks
+Main $args
