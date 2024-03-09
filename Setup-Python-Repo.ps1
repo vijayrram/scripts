@@ -13,6 +13,7 @@ function Main ($Ssh) {
 	Setup-Pylint
 	Setup-Pytest
 	Setup-Githooks
+	Setup-Folders
 
 	Write-Output "# $Name" | Out-File -Encoding ASCII README.md
 	git add .
@@ -79,6 +80,18 @@ function Setup-Githooks {
 	Copy-Item $SCRIPTS_PATH './git-hooks' -Recurse -Force
 
 	./git-hooks/Install-Hooks.ps1
+}
+
+function Setup-Folders {
+	New-Item -Path 'src' -ItemType Directory -ErrorAction Ignore
+	New-Item -Path 'src/.gitkeep'
+
+	New-Item -Path 'tests' -ItemType Directory -ErrorAction Ignore
+	New-Item -Path 'tests/unit' -ItemType Directory -ErrorAction Ignore
+	New-Item -Path 'tests/unit/mocks' -ItemType Directory -ErrorAction Ignore
+	New-Item -Path 'tests/mocks' -ItemType Directory -ErrorAction Ignore
+	New-Item -Path 'tests/unit/mocks/.gitkeep'
+	New-Item -Path 'tests/mocks/.gitkeep'
 }
 
 Main $args
